@@ -1,17 +1,23 @@
 # ShadowPrompter
 
+![Go](https://img.shields.io/badge/Go-client-00ADD8?logo=go&logoColor=white)
+![Python](https://img.shields.io/badge/Python-server-3776AB?logo=python&logoColor=white)
+![LLM](https://img.shields.io/badge/LLM-orchestrated%20C2-purple)
+![Research](https://img.shields.io/badge/purpose-defensive%20research-blue)
+![Lab Only](https://img.shields.io/badge/environment-lab%20only-orange)
+![Status](https://img.shields.io/badge/status-academic%20prototype-lightgrey)
+
 **ShadowPrompter** is a research framework for studying **LLM-orchestrated command-and-control (C2) workflows** in controlled laboratory environments.
 
-The project explores how Large Language Models (LLMs) can be used as an orchestration layer inside malware-like C2 architectures. Instead of sending only predefined commands, ShadowPrompter studies scenarios where prompts are sent to an LLM and the model generates the action to be executed by a controlled client.
+The project explores how Large Language Models (LLMs) can be used as an orchestration layer inside C2-like architectures for defensive experimentation. Instead of sending only predefined commands, ShadowPrompter studies scenarios where prompts are sent to an LLM and the model generates the action to be executed by a controlled client.
 
-> **Disclaimer**
->
+> [!WARNING]
 > This project is intended only for academic, defensive, and controlled cybersecurity research.  
 > It must be used exclusively in isolated lab environments and never against third-party systems.
 
 ---
 
-## What is ShadowPrompter?
+## 🧠 What is ShadowPrompter?
 
 ShadowPrompter is composed of two main components:
 
@@ -24,9 +30,18 @@ The client receives prompts, sends them to the selected LLM backend, executes th
 
 ---
 
-## Supported Scenarios
+## 🧩 Supported Scenarios
 
 ShadowPrompter includes several experimental scenarios:
+
+| # | Scenario | Prompt Source | Inference Backend |
+|---|---|---|---|
+| 1 | Remote LLM API with Dynamic Prompts | Server | Remote API |
+| 2 | Remote LLM API with Embedded Prompts | Client | Remote API |
+| 3 | Local LLM with Dynamic Prompts | Server | Local Ollama |
+| 4 | Local LLM with Embedded Prompts | Client | Local Ollama |
+| 5 | LLM Master Scenario | Server / Client | Shared internal LLM node |
+| 6 | Integrated Adaptive Mode | Server | Remote API, Local Ollama, or LLM Master |
 
 ### 1. Remote LLM API with Dynamic Prompts
 
@@ -62,7 +77,7 @@ This is the recommended mode for comparing different inference strategies.
 
 ---
 
-## Project Setup
+## ⚙️ Project Setup
 
 Before running ShadowPrompter, the Python environment, cryptographic keys, configuration files, and Go client binaries must be prepared.
 
@@ -141,7 +156,7 @@ The generated client binary should only be executed inside authorized laboratory
 
 ---
 
-## How to Use
+## 🚀 How to Use
 
 1. Set up an isolated lab environment with controlled virtual machines.
 2. Create and activate the Python virtual environment.
@@ -164,7 +179,7 @@ All experiments should use benign test data and controlled systems only.
 
 ---
 
-## Main Features
+## ✨ Main Features
 
 - Cross-platform client for Windows and Linux.
 - Python server with web-based control panel.
@@ -182,7 +197,7 @@ All experiments should use benign test data and controlled systems only.
 
 ---
 
-## Defensive Research Goals
+## 🛡️ Defensive Research Goals
 
 ShadowPrompter is designed to help defenders study:
 
@@ -196,7 +211,7 @@ ShadowPrompter is designed to help defenders study:
 
 ---
 
-## Author
+## 👤 Author
 
 **Iván Llorente Cano**  
 Master's Degree in Cybersecurity  
@@ -205,7 +220,7 @@ Universidad Carlos III de Madrid
 
 ---
 
-## License
+## 📄 License
 
 This project is part of an academic research work.  
 Use it only for authorized, ethical, and controlled experimentation.
