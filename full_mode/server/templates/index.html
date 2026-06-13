@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2 Server · Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="dark-mode">
+    <div class="app-shell">
+        <main class="main-content">
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <p class="eyebrow">real‑time command & control</p>
+                    <h2 class="page-title">Dashboard</h2>
+                    <div class="server-status-row">
+                        <span id="server-status-badge" class="status-badge">Stopped</span>
+                        <span id="server-port" class="status-port">Port: 9000</span>
+                    </div>
+                </div>
+                <div class="topbar-center">
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-wave-square"></i>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-title">C2 Server</span>
+                        <span class="brand-subtitle">Control Panel</span>
+                    </div>
+                </div>
+                <div class="topbar-actions">
+                    <button id="start-server" class="primary-btn" type="button">
+                        <i class="fa-solid fa-play"></i> Start
+                    </button>
+                    <button id="stop-server" class="primary-btn" type="button" disabled>
+                        <i class="fa-solid fa-stop"></i> Stop
+                    </button>
+                    <div class="ai-toggle-wrapper" title="Switch AI Backend">
+                        <span class="ai-toggle-label left">Ollama</span>
+                        <button id="ai-backend-toggle" class="ai-toggle" type="button" aria-label="Toggle AI backend" aria-pressed="false">
+                            <span class="ai-toggle-track">
+                                <span class="ai-toggle-icon left-icon"><i class="fa-solid fa-bolt" style="color: rgb(255, 212, 59);"></i></span>
+                                <span class="ai-toggle-icon right-icon">🦙</span>
+                                <span class="ai-toggle-thumb"></span>
+                            </span>
+                        </button>
+                        <span class="ai-toggle-label right">Groq</span>
+                    </div>
+                    <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+                </div>
+            </header>
+            <section class="content-grid">
+                <div class="panel-block glass-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="section-kicker">infrastructure</p>
+                            <h3 class="panel-title">Connected clients</h3>
+                        </div>
+                    </div>
+                    <div class="node-list" id="client-list"></div>
+                </div>
+                <div class="panel-block glass-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="section-kicker">messages</p>
+                            <h3 class="panel-title">Event log</h3>
+                        </div>
+                        <button id="clear-log" class="icon-btn subtle" type="button" aria-label="Clear log">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                    <div class="console-box">
+                        <div class="console-head">
+                            <span class="console-pill live"></span>
+                            <span class="console-pill"></span>
+                            <span class="console-pill"></span>
+                        </div>
+                        <div class="console-body" id="log-container"></div>
+                    </div>
+                    <div class="action-input-group">
+                        <div class="custom-dropdown" id="target-dropdown">
+                            <button class="dropdown-toggle" id="target-dropdown-toggle" type="button">
+                                <span id="target-dropdown-text">None</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="target-dropdown-menu"></div>
+                        </div>
+                        <input id="message-input" class="action-input" type="text" placeholder="Type a prompt...">
+                        <button id="send-btn" class="primary-btn compact" type="button">
+                            <i class="fa-solid fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <div class="panel-block glass-panel history-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="section-kicker">command history</p>
+                        <h3 class="panel-title" id="history-panel-title">Select a client</h3>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <div id="group-navigator" style="display: none; align-items: center; gap: 6px; margin-right: 8px;">
+                            <button id="group-prev" class="icon-btn subtle" style="width: 30px; height: 30px;" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span id="group-client-label" style="font-size: 0.8rem; color: var(--text-secondary); min-width: 100px; text-align: center;"></span>
+                            <button id="group-next" class="icon-btn subtle" style="width: 30px; height: 30px;" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                        <button id="sort-newest-first" class="icon-btn subtle" title="Newest first">
+                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                        </button>
+                        <button id="sort-oldest-first" class="icon-btn subtle" title="Oldest first">
+                            <i class="fa-solid fa-arrow-up-wide-short"></i>
+                        </button>
+                        <button id="open-full-history" class="icon-btn subtle" type="button" aria-label="Open full history" style="display: none;">
+                            <i class="fa-solid fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="console-box" style="max-height: 300px;">
+                    <div class="console-body" id="history-panel-body">
+                        <div class="log-entry info">No client selected</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+</html>
